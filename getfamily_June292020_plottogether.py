@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.colors as mcolors
 import matplotlib as mpl
 import pickle
 from scipy.special import comb
@@ -8,7 +9,7 @@ import itertools
 from read_450_noises import read450noise
 from astropy.io import fits
 from mpl_toolkits.axes_grid1 import make_axes_locatable
-import seaborn as sns
+#import seaborn as sns
 
 ######
 from matplotlib.pyplot import rc
@@ -73,7 +74,8 @@ def plot_SDfamsize(eachregion,wave,eachtargunc):
     region_noises[eachregion]['date_scans'] = np.array(date_scans)
 
     plotcolorbounds = [0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 100.0]
-    plotcolors      = sns.color_palette('colorblind',len(plotcolorbounds)-3)
+    #plotcolors      = sns.color_palette('colorblind',len(plotcolorbounds)-3)
+    plotcolors = list(mcolors.TABLEAU_COLORS)[0:len(plotcolorbounds)-3]
     plotcolors.insert(0,'k')
     plotcolors.append('0.75')
 

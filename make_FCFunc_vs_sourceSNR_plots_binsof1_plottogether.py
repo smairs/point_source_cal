@@ -1,11 +1,12 @@
 import matplotlib.pyplot as plt
+import matplotlib.colors as mcolors
 import matplotlib as mpl
 import numpy as np
 from astropy.io import fits
 from read_450_noises import read450noise
 import glob
 from get_vars import get_vars
-import seaborn as sns
+#import seaborn as sns
 from getfamily_June292020_plottogether import plot_SDfamsize
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 from astropy.time import Time
@@ -40,7 +41,8 @@ for regions_to_run in regions_to_run_list:
     print(cat_list)
 
     plotcolorbounds = [0,30,40,50,60,70,80,90,100]
-    plotcolors      = sns.color_palette('colorblind',len(plotcolorbounds)-3)
+    #plotcolors      = sns.color_palette('colorblind',len(plotcolorbounds)-3)
+    plotcolors = list(mcolors.TABLEAU_COLORS)[0:len(plotcolorbounds)-3]
     plotcolors.insert(0,'0.75')
     plotcolors.append('k')
 
@@ -263,7 +265,8 @@ for regions_to_run in regions_to_run_list:
 
                 # SD thresh plot
                 plotcolorbounds = [0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 100.0]
-                plotcolors = sns.color_palette('colorblind', len(plotcolorbounds) - 3)
+                #plotcolors = sns.color_palette('colorblind', len(plotcolorbounds) - 3)
+                plotcolors = list(mcolors.TABLEAU_COLORS)[0:len(plotcolorbounds)-3]
                 plotcolors.insert(0, 'k')
                 plotcolors.append('0.75')
 

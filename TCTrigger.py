@@ -143,8 +143,14 @@ def TCTrigger(input_data,protocat,diskcat,region, aperture_diam = 0.00083333, tr
         # So use the catalogues Doug created for his midproject paper
 
         #peakcat_name = TCIdentifySources(output_dir+coadd_name.split('/')[-1])
-    
-        peakcat_name = '/export/data/smairs/smairs_github/450_cal_check_20190413/config/'+region+'_450_sourcecat_20201201.fits'
+     
+
+        if region not in ['IC348','NGC1333','NGC2024','NGC2071','OMC23','OPHCORE','SERPM','SERPS']:
+            peakcat_name = 'config/'+region+'_'+wave+'_sourcecat_20201201.fits'
+        elif wave == '450':
+            peakcat_name = 'config/'+region+'_'+wave+'_sourcecat_20200911.fits'
+        elif wave == '850':
+            peakcat_name = 'config/'+region+'_'+wave+'_sourcecat_20170616.fits'
 
         if os.path.exists(peakcat_name):
 
