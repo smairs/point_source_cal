@@ -434,7 +434,7 @@ def TCYSOcompare(peakcat,protocatalogue,diskcatalogue,region,wave='850'):
 ####################
 ####################
 
-def TCTrackSources(input_data,peakcat,region,output_dir,aperture_diam = 0.00083333):  
+def TCTrackSources(input_data,peakcat,region,output_dir,aperture_diam = 0.00083333,wave='850'):  
     '''                                                                                                                                                                                                                            
     This program uses the results of TCIdentifySources
     to obtain the peak brightness for each source in each individual epoch. 
@@ -595,7 +595,7 @@ def TCTrackSources(input_data,peakcat,region,output_dir,aperture_diam = 0.000833
                 results_dict[peak_cat['ID'][eachsource]]['scan'].append(scan)
 
     # Return the peak fluxes and dates organised by each source
-    pickle.dump(results_dict,open(output_dir+'/'+region+'_450_sourcecat.bin','wb'))
+    pickle.dump(results_dict,open(output_dir+'/'+region+'_'+wave+'_sourcecat.bin','wb'))
     return(results_dict)
 
 ############################
