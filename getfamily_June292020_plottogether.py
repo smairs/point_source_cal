@@ -6,10 +6,10 @@ import pickle
 from scipy.special import comb
 import glob
 import itertools
-from read_450_noises import read450noise
+from point_source_cal.noisefunctions import readnoise
 from astropy.io import fits
 from mpl_toolkits.axes_grid1 import make_axes_locatable
-#import seaborn as sns
+import seaborn as sns
 
 ######
 from matplotlib.pyplot import rc
@@ -68,14 +68,14 @@ def plot_SDfamsize(eachregion,wave,eachtargunc):
 
 
     region_noises = {}
-    date_scans,noises = read450noise('noises_450.txt',eachregion)
+    date_scans,noises = readnoise('noises_'+wave+'.txt',eachregion)
     region_noises[eachregion] = {}
     region_noises[eachregion]['noises'] = np.array(noises)
     region_noises[eachregion]['date_scans'] = np.array(date_scans)
 
     plotcolorbounds = [0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 100.0]
-    #plotcolors      = sns.color_palette('colorblind',len(plotcolorbounds)-3)
-    plotcolors = list(mcolors.TABLEAU_COLORS)[0:len(plotcolorbounds)-3]
+    plotcolors      = sns.color_palette('colorblind',len(plotcolorbounds)-3)
+    #plotcolors = list(mcolors.TABLEAU_COLORS)[0:len(plotcolorbounds)-3]
     plotcolors.insert(0,'k')
     plotcolors.append('0.75')
 
@@ -115,23 +115,21 @@ def plot_SDfamsize(eachregion,wave,eachtargunc):
     print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n')
     brightnessthresh = eachbrightnessthresh
     # coadd_cat is what we used to plot the ensemble signal plots
-    try:
-        coadd_cat = fits.getdata('config/' + eachregion + '_450_sourcecat_20200911.fits')
-    except:
-        coadd_cat = fits.getdata('config/' + eachregion + '_450_sourcecat_20201201.fits')
 
-    if eachregion != 'NGC2071':
-        sourceinfo = pickle.load(open(eachregion + '_' + wave + '/' + eachregion + '_450_sourcecat.bin', 'rb'))
-        metadata = np.genfromtxt(
-            glob.glob(eachregion + '_' + wave + '/' + 'results/' + eachregion + '/*_metadata.txt')[0], names=True,
-            dtype=[('ID', '<f8'), ('Name', '<U28'), ('UT', '<f8'), ('JD', '<f8'), ('Obs', '<f8'), ('Elev', '<f8'),
-                   ('Tau225', '<f8'), ('RMS', '<f8'), ('RMS_unit', '<f8')])
-    else:
-        sourceinfo = pickle.load(open('NGC2068_' + wave + '/' + eachregion + '_450_sourcecat.bin', 'rb'))
-        metadata = np.genfromtxt(glob.glob('NGC2068_' + wave + '/' + 'results/' + eachregion + '/*_metadata.txt')[0],
-                                 names=True,
-                                 dtype=[('ID', '<f8'), ('Name', '<U28'), ('UT', '<f8'), ('JD', '<f8'), ('Obs', '<f8'),
-                                        ('Elev', '<f8'), ('Tau225', '<f8'), ('RMS', '<f8'), ('RMS_unit', '<f8')])
+    if region not in ['IC348','NGC1333','NGC2024','NGC2071','OMC23','OPHCORE','SERPM','SERPS']:
+        coadd_cat_name = 'config/'+region+'_'+wave+'_sourcecat_20201201.fits'
+    elif wave == '450':
+        coadd_cat_name = 'config/'+region+'_'+wave+'_sourcecat_20200911.fits'
+    elif wave == '850':
+        coadd_cat_name = 'config/'+region+'_'+wave+'_sourcecat_20170616.fits'
+
+
+    sourceinfo = pickle.load(open('pointsource_results/' + eachregion + '/' + eachregion + '_'+wave+'_sourcecat.bin', 'rb'))
+    metadata = np.genfromtxt(
+        glob.glob('pointsource_results/' + eachregion + '/*'+wave+'*_metadata.txt')[0], names=True,
+        dtype=[('ID', '<f8'), ('Name', '<U28'), ('UT', '<f8'), ('JD', '<f8'), ('Obs', '<f8'), ('Elev', '<f8'),
+               ('Tau225', '<f8'), ('RMS', '<f8'), ('RMS_unit', '<f8')])
+
 
     num_sources_above_flux = len(
         np.array(coadd_cat['PEAK_FLUX'])[np.where(np.array(coadd_cat['PEAK_FLUX']) > brightnessthresh)])
@@ -264,6 +262,7 @@ def plot_SDfamsize(eachregion,wave,eachtargunc):
     SD_of_best_fam_for_plot = []
     fam_for_plot = []
     FCF_dates_all = []
+    families_all = []
     FCFs_all = []
     FCF_uncs_all = []
     normfluxes_by_date_all = []
@@ -313,6 +312,7 @@ def plot_SDfamsize(eachregion,wave,eachtargunc):
             normfluxes_by_date.append(eachnormflux)
 
         FCFs_all.append(FCFs)
+        families_all.append(fam_for_plot)
         FCF_uncs_all.append(FCF_uncs)
         FCF_dates_all.append(date_list_RMS_corrected[0])
         normfluxes_by_date_all.append(np.array(normfluxes_by_date))
@@ -326,7 +326,7 @@ def plot_SDfamsize(eachregion,wave,eachtargunc):
                 colors_for_plot.append('0.75')
 
     return(SD_of_best_fam_for_plot, numcals_for_plot, colors_for_plot,RMSthresh,FCF_dates_all,FCFs_all,FCF_uncs_all,
-           normfluxes_by_date_all)
+           normfluxes_by_date_all,families_all)
 
     #SD_threshes_thistarg.append(SD_of_best_fam_for_plot)
     #Numcals_thistarg.append(numcals_for_plot)
