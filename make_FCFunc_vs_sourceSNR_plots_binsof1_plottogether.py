@@ -25,7 +25,8 @@ rc('axes',labelsize='x-small')
 ##################################################
 
 #regions_to_run_list = [['IC348'],['NGC1333'],['NGC2024'],['NGC2071'],['OMC23'],['OPHCORE'],['SERPM'],['SERPS']]
-def make_FCFunc_family_plots(regions_to_run,wave)
+def make_FCFunc_family_plots(regions_to_run,wave):
+
     regions_to_run_list = list(regions_to_run)
     
     for regions_to_run in regions_to_run_list:
@@ -69,7 +70,8 @@ def make_FCFunc_family_plots(regions_to_run,wave)
         brightness_threshes['OPHCORE']['10.0'] = 9e3
         brightness_threshes['SERPM']['10.0'] = 1.5e3
         brightness_threshes['SERPS']['10.0'] = 1.3e3
-        brightness_threshes['DR21C']['10.0'] = 1.3e4
+        #brightness_threshes['DR21C']['10.0'] = 1.3e4
+        brightness_threshes['DR21C']['10.0'] = 1.5e3
     
     
         brightness_threshes['IC348']['5.0'] = 1.5e3
@@ -80,7 +82,8 @@ def make_FCFunc_family_plots(regions_to_run,wave)
         brightness_threshes['OPHCORE']['5.0'] = 9e3
         brightness_threshes['SERPM']['5.0'] = 1.5e3
         brightness_threshes['SERPS']['5.0'] = 1.3e3
-        brightness_threshes['DR21C']['5.0'] = 1.3e4
+        #brightness_threshes['DR21C']['5.0'] = 1.3e4
+        brightness_threshes['DR21C']['5.0'] = 1.5e3
     
     
         brightness_threshes['IC348']['2.5'] = 1.5e3
@@ -91,7 +94,8 @@ def make_FCFunc_family_plots(regions_to_run,wave)
         brightness_threshes['OPHCORE']['2.5'] = 9e3
         brightness_threshes['SERPM']['2.5'] = 4e3
         brightness_threshes['SERPS']['2.5'] = 2e3
-        brightness_threshes['DR21C']['2.5'] = 1.3e4
+        #brightness_threshes['DR21C']['2.5'] = 1.3e4
+        brightness_threshes['DR21C']['2.5'] = 1.5e3
     
     
         brightness_threshes['IC348']['1.0'] = 1.5e3
@@ -102,7 +106,8 @@ def make_FCFunc_family_plots(regions_to_run,wave)
         brightness_threshes['OPHCORE']['1.0'] = 9e3
         brightness_threshes['SERPM']['1.0'] = 4e3
         brightness_threshes['SERPS']['1.0'] = 3e3
-        brightness_threshes['DR21C']['1.0'] = 1.3e4
+        #brightness_threshes['DR21C']['1.0'] = 1.3e4
+        brightness_threshes['DR21C']['1.0'] = 1.5e3
     
     
         #fig,axs = plt.subplots(ncols=2,nrows=4,constrained_layout=False)
@@ -335,7 +340,7 @@ def make_FCFunc_family_plots(regions_to_run,wave)
     
                     # The negative 1 index gives the highest cal number that meets the target uncertainty criterion
                     cal_info_dict = {}
-                    cal_info_dict['family'] = families_all[-1]
+                    cal_info_dict['family'] = families_all[-1][-1]
                     cal_info_dict['datescans'] = FCF_dates_all[-1]
                     cal_info_dict['RelFCFs'] = FCFs_all[-1]
                     cal_info_dict['RelFCFuncs'] = np.array(FCF_uncs_all[-1]) / 100

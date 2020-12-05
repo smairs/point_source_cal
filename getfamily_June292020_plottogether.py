@@ -64,7 +64,8 @@ def plot_SDfamsize(eachregion,wave,eachtargunc):
 
     #SERP SOUTH:
     if eachregion == 'DR21C':
-        brightness_threshes['5.0'] = [1.3e4]
+        #brightness_threshes['5.0'] = [1.3e4]
+        brightness_threshes['5.0'] = [1.5e3]
 
 
     region_noises = {}
@@ -116,13 +117,14 @@ def plot_SDfamsize(eachregion,wave,eachtargunc):
     brightnessthresh = eachbrightnessthresh
     # coadd_cat is what we used to plot the ensemble signal plots
 
-    if region not in ['IC348','NGC1333','NGC2024','NGC2071','OMC23','OPHCORE','SERPM','SERPS']:
-        coadd_cat_name = 'config/'+region+'_'+wave+'_sourcecat_20201201.fits'
+    if eachregion not in ['IC348','NGC1333','NGC2024','NGC2071','OMC23','OPHCORE','SERPM','SERPS']:
+        coadd_cat_name = 'config/'+eachregion+'_'+wave+'_sourcecat_20201201.fits'
     elif wave == '450':
-        coadd_cat_name = 'config/'+region+'_'+wave+'_sourcecat_20200911.fits'
+        coadd_cat_name = 'config/'+eachregion+'_'+wave+'_sourcecat_20200911.fits'
     elif wave == '850':
-        coadd_cat_name = 'config/'+region+'_'+wave+'_sourcecat_20170616.fits'
+        coadd_cat_name = 'config/'+eachregion+'_'+wave+'_sourcecat_20170616.fits'
 
+    coadd_cat = fits.getdata(coadd_cat_name)
 
     sourceinfo = pickle.load(open('pointsource_results/' + eachregion + '/' + eachregion + '_'+wave+'_sourcecat.bin', 'rb'))
     metadata = np.genfromtxt(
@@ -149,7 +151,7 @@ def plot_SDfamsize(eachregion,wave,eachtargunc):
     known_variables = []
     for eachknownvariable in known_variables1:
         known_variables.append(str(eachknownvariable).zfill(2))
-    print('\n\n',known_variables,'\n\n')
+    print('\n\nKnown Variables:',known_variables,'\n\n')
 
     metadata_datestring = []
     rms_on_date = []
@@ -244,7 +246,7 @@ def plot_SDfamsize(eachregion,wave,eachtargunc):
     for eachpair in pairnames:
         source1 = eachpair[0:2]
         source2 = eachpair[2:4]
-        print(source1,source2)
+        #print(source1,source2)
         if source1 not in unsorted_sources:
             if source1 not in known_variables:
                 unsorted_sources.append(source1)
