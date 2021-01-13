@@ -60,56 +60,104 @@ def make_FCFunc_family_plots(regions_to_run,wave):
         brightness_threshes['SERPM'] = {}
         brightness_threshes['SERPS'] = {}
         brightness_threshes['DR21C'] = {}
+
+
+        if wave == '450':
+            brightness_threshes['IC348']['10.0'] = 1.5e3
+            brightness_threshes['NGC1333']['10.0'] = 2e3
+            brightness_threshes['NGC2024']['10.0'] = 8e3
+            brightness_threshes['NGC2071']['10.0'] = 1.5e3
+            brightness_threshes['OMC23']['10.0'] = 3e3
+            brightness_threshes['OPHCORE']['10.0'] = 9e3
+            brightness_threshes['SERPM']['10.0'] = 1.5e3
+            brightness_threshes['SERPS']['10.0'] = 1.3e3
+            #brightness_threshes['DR21C']['10.0'] = 1.3e4
+            brightness_threshes['DR21C']['10.0'] = 1.5e3
     
     
-        brightness_threshes['IC348']['10.0'] = 1.5e3
-        brightness_threshes['NGC1333']['10.0'] = 2e3
-        brightness_threshes['NGC2024']['10.0'] = 8e3
-        brightness_threshes['NGC2071']['10.0'] = 1.5e3
-        brightness_threshes['OMC23']['10.0'] = 3e3
-        brightness_threshes['OPHCORE']['10.0'] = 9e3
-        brightness_threshes['SERPM']['10.0'] = 1.5e3
-        brightness_threshes['SERPS']['10.0'] = 1.3e3
-        #brightness_threshes['DR21C']['10.0'] = 1.3e4
-        brightness_threshes['DR21C']['10.0'] = 1.5e3
+            brightness_threshes['IC348']['5.0'] = 1.5e3
+            brightness_threshes['NGC1333']['5.0'] = 2e3
+            brightness_threshes['NGC2024']['5.0'] = 8e3
+            brightness_threshes['NGC2071']['5.0'] = 1.5e3
+            brightness_threshes['OMC23']['5.0'] = 3e3
+            brightness_threshes['OPHCORE']['5.0'] = 9e3
+            brightness_threshes['SERPM']['5.0'] = 1.5e3
+            brightness_threshes['SERPS']['5.0'] = 1.3e3
+            #brightness_threshes['DR21C']['5.0'] = 1.3e4
+            brightness_threshes['DR21C']['5.0'] = 1.5e3
     
     
-        brightness_threshes['IC348']['5.0'] = 1.5e3
-        brightness_threshes['NGC1333']['5.0'] = 2e3
-        brightness_threshes['NGC2024']['5.0'] = 8e3
-        brightness_threshes['NGC2071']['5.0'] = 1.5e3
-        brightness_threshes['OMC23']['5.0'] = 3e3
-        brightness_threshes['OPHCORE']['5.0'] = 9e3
-        brightness_threshes['SERPM']['5.0'] = 1.5e3
-        brightness_threshes['SERPS']['5.0'] = 1.3e3
-        #brightness_threshes['DR21C']['5.0'] = 1.3e4
-        brightness_threshes['DR21C']['5.0'] = 1.5e3
+            brightness_threshes['IC348']['2.5'] = 1.5e3
+            brightness_threshes['NGC1333']['2.5'] = 8e3
+            brightness_threshes['NGC2024']['2.5'] = 8e3
+            brightness_threshes['NGC2071']['2.5'] = 1.5e3
+            brightness_threshes['OMC23']['2.5'] = 7e3
+            brightness_threshes['OPHCORE']['2.5'] = 9e3
+            brightness_threshes['SERPM']['2.5'] = 4e3
+            brightness_threshes['SERPS']['2.5'] = 2e3
+            #brightness_threshes['DR21C']['2.5'] = 1.3e4
+            brightness_threshes['DR21C']['2.5'] = 1.5e3
     
     
-        brightness_threshes['IC348']['2.5'] = 1.5e3
-        brightness_threshes['NGC1333']['2.5'] = 8e3
-        brightness_threshes['NGC2024']['2.5'] = 8e3
-        brightness_threshes['NGC2071']['2.5'] = 1.5e3
-        brightness_threshes['OMC23']['2.5'] = 7e3
-        brightness_threshes['OPHCORE']['2.5'] = 9e3
-        brightness_threshes['SERPM']['2.5'] = 4e3
-        brightness_threshes['SERPS']['2.5'] = 2e3
-        #brightness_threshes['DR21C']['2.5'] = 1.3e4
-        brightness_threshes['DR21C']['2.5'] = 1.5e3
+            brightness_threshes['IC348']['1.0'] = 1.5e3
+            brightness_threshes['NGC1333']['1.0'] = 8e3
+            brightness_threshes['NGC2024']['1.0'] = 1e4
+            brightness_threshes['NGC2071']['1.0'] = 2e3
+            brightness_threshes['OMC23']['1.0'] = 7e3
+            brightness_threshes['OPHCORE']['1.0'] = 9e3
+            brightness_threshes['SERPM']['1.0'] = 4e3
+            brightness_threshes['SERPS']['1.0'] = 3e3
+            #brightness_threshes['DR21C']['1.0'] = 1.3e4
+            brightness_threshes['DR21C']['1.0'] = 1.5e3      
+    
+        if wave == '850':
+            brightness_threshes['IC348']['10.0'] = 1.5e3
+            brightness_threshes['NGC1333']['10.0'] = 2e3
+            brightness_threshes['NGC2024']['10.0'] = 8e3
+            brightness_threshes['NGC2071']['10.0'] = 1.5e3
+            brightness_threshes['OMC23']['10.0'] = 3e3
+            brightness_threshes['OPHCORE']['10.0'] = 0.25
+            brightness_threshes['SERPM']['10.0'] = 1.5e3
+            brightness_threshes['SERPS']['10.0'] = 1.3e3
+            #brightness_threshes['DR21C']['10.0'] = 1.3e4
+            brightness_threshes['DR21C']['10.0'] = 1.5e3
     
     
-        brightness_threshes['IC348']['1.0'] = 1.5e3
-        brightness_threshes['NGC1333']['1.0'] = 8e3
-        brightness_threshes['NGC2024']['1.0'] = 1e4
-        brightness_threshes['NGC2071']['1.0'] = 2e3
-        brightness_threshes['OMC23']['1.0'] = 7e3
-        brightness_threshes['OPHCORE']['1.0'] = 9e3
-        brightness_threshes['SERPM']['1.0'] = 4e3
-        brightness_threshes['SERPS']['1.0'] = 3e3
-        #brightness_threshes['DR21C']['1.0'] = 1.3e4
-        brightness_threshes['DR21C']['1.0'] = 1.5e3
+            brightness_threshes['IC348']['5.0'] = 1.5e3
+            brightness_threshes['NGC1333']['5.0'] = 2e3
+            brightness_threshes['NGC2024']['5.0'] = 8e3
+            brightness_threshes['NGC2071']['5.0'] = 1.5e3
+            brightness_threshes['OMC23']['5.0'] = 3e3
+            brightness_threshes['OPHCORE']['5.0'] = 0.25
+            brightness_threshes['SERPM']['5.0'] = 1.5e3
+            brightness_threshes['SERPS']['5.0'] = 1.3e3
+            #brightness_threshes['DR21C']['5.0'] = 1.3e4
+            brightness_threshes['DR21C']['5.0'] = 1.5e3
     
     
+            brightness_threshes['IC348']['2.5'] = 1.5e3
+            brightness_threshes['NGC1333']['2.5'] = 8e3
+            brightness_threshes['NGC2024']['2.5'] = 8e3
+            brightness_threshes['NGC2071']['2.5'] = 1.5e3
+            brightness_threshes['OMC23']['2.5'] = 7e3
+            brightness_threshes['OPHCORE']['2.5'] = 0.25
+            brightness_threshes['SERPM']['2.5'] = 4e3
+            brightness_threshes['SERPS']['2.5'] = 2e3
+            #brightness_threshes['DR21C']['2.5'] = 1.3e4
+            brightness_threshes['DR21C']['2.5'] = 1.5e3
+    
+    
+            brightness_threshes['IC348']['1.0'] = 1.5e3
+            brightness_threshes['NGC1333']['1.0'] = 8e3
+            brightness_threshes['NGC2024']['1.0'] = 1e4
+            brightness_threshes['NGC2071']['1.0'] = 2e3
+            brightness_threshes['OMC23']['1.0'] = 7e3
+            brightness_threshes['OPHCORE']['1.0'] = 0.25
+            brightness_threshes['SERPM']['1.0'] = 4e3
+            brightness_threshes['SERPS']['1.0'] = 3e3
+            #brightness_threshes['DR21C']['1.0'] = 1.3e4
+            brightness_threshes['DR21C']['1.0'] = 1.5e3     
+
         #fig,axs = plt.subplots(ncols=2,nrows=4,constrained_layout=False)
         fig,axs = plt.subplots(ncols=2,nrows=1,constrained_layout=False)
     
@@ -332,13 +380,17 @@ def make_FCFunc_family_plots(regions_to_run,wave):
                     ax3.set_xlim(xmin=0.02, xmax=0.35)
     
                     fig.tight_layout(pad=0.45)
-                    fig.savefig(region+'SignalUnc_versus_FaintSNR_targunc'+str(int(float(target_uncertainty_key)))+
+                    fig.savefig('pointsource_results/'+region+'SignalUnc_versus_FaintSNR_targunc'+str(int(float(target_uncertainty_key)))+
                                 '.pdf',format='pdf')
                     plt.clf()
                     plt.close()
                     plt.close(fig)
     
                     # The negative 1 index gives the highest cal number that meets the target uncertainty criterion
+                    print('\n\nHEREHEREHERE\n\n',families_all,'\n\n')
+                    print('\n\n',FCF_dates_all,'\n\n')
+                    print('\n\n',FCFs_all,'\n\n')
+                    print('\n\n',FCF_uncs_all,'\n\n')
                     cal_info_dict = {}
                     cal_info_dict['family'] = families_all[-1][-1]
                     cal_info_dict['datescans'] = FCF_dates_all[-1]
@@ -373,13 +425,13 @@ def make_FCFunc_family_plots(regions_to_run,wave):
                     spaced_xticks.append(date)
                     spaced_xtick_labels.append(datelabel)
             plt.xticks(spaced_xticks,spaced_xtick_labels,rotation=20)
-            plt.savefig('FCFplots/'+region+'_'+str(numcals_for_plot[eachcalnum])+'FamMems_FCF_with_time.png',format='png',dpi=300)
+            plt.savefig('pointsource_results/FCFplots/'+region+'_'+str(numcals_for_plot[eachcalnum])+'FamMems_FCF_with_time.png',format='png',dpi=300)
             plt.clf()
     
         for eachcalnum in range(len(FCFs_all)):
             plt.hist(FCFs_all[eachcalnum],color='k')
             plt.suptitle(region+', Num Fam Members: '+str(numcals_for_plot[eachcalnum]))
-            plt.savefig('FCFplots/'+region+'_'+str(numcals_for_plot[eachcalnum])+'FamMems_FCFhists.png',format='png',dpi=300)
+            plt.savefig('pointsource_results/FCFplots/'+region+'_'+str(numcals_for_plot[eachcalnum])+'FamMems_FCFhists.png',format='png',dpi=300)
             plt.clf()
     
         for eachcalnum in range(len(FCFs_all)):
@@ -389,5 +441,5 @@ def make_FCFunc_family_plots(regions_to_run,wave):
             plt.xlim(xmin=0,xmax=10)
             plt.ylim(ymin=0, ymax=12)
             plt.suptitle(region+', Num Fam Members: '+str(numcals_for_plot[eachcalnum]))
-            plt.savefig('FCFplots/'+region+'_'+str(numcals_for_plot[eachcalnum])+'FamMems_FCFunchists.png',format='png',dpi=300)
+            plt.savefig('pointsource_results/FCFplots/'+region+'_'+str(numcals_for_plot[eachcalnum])+'FamMems_FCFunchists.png',format='png',dpi=300)
             plt.clf()

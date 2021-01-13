@@ -1,3 +1,5 @@
+#2021-01-11 -- BRIGHTNESS THRESHOLDS SHOULD BE IN Jy/beam WHILE MAPS ARE IN mJy/beam!
+
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
@@ -24,49 +26,82 @@ def plot_SDfamsize(eachregion,wave,eachtargunc):
     ######
 
     brightness_threshes = {}
-    #brightness_threshes['10.0'] = [1.5e3, 2e3, 8e3, 1.5e3, 3e3, 9e3, 1.5e3, 1.3e3]
-    #brightness_threshes['5.0']  = [1.5e3, 2e3, 8e3, 1.5e3, 3e3, 9e3, 1.5e3, 1.3e3]
-    #brightness_threshes['2.5']  = [1.5e3, 8e3, 8e3, 1.5e3, 7e3, 9e3, 4.0e3, 2.0e3]
-    #brightness_threshes['1.0']  = [1.5e3, 8e3, 1e4, 2.0e3, 7e3, 9e3, 4.0e3, 3.0e3]
 
+    if wave == '450':
+        #IC 348:
+        if eachregion == 'IC348':
+            brightness_threshes['5.0'] = [1.5e3]
 
-    #IC 348:
-    if eachregion == 'IC348':
-        brightness_threshes['5.0'] = [1.5e3]
+        #NGC 1333:
+        if eachregion == 'NGC1333':
+            brightness_threshes['5.0'] = [2e3]
 
-    #NGC 1333:
-    if eachregion == 'NGC1333':
-        brightness_threshes['5.0'] = [2e3]
+        #NGC 2024:
+        if eachregion == 'NGC2024':
+            brightness_threshes['5.0'] = [8e3]
 
-    #NGC 2024:
-    if eachregion == 'NGC2024':
-        brightness_threshes['5.0'] = [8e3]
+        #NGC 2068:
+        if eachregion == 'NGC2071':
+            brightness_threshes['5.0'] = [1.5e3]
 
-    #NGC 2068:
-    if eachregion == 'NGC2071':
-        brightness_threshes['5.0'] = [1.5e3]
+        #OMC 2/3:
+        if eachregion == 'OMC23':
+            brightness_threshes['5.0'] = [3e3]
 
-    #OMC 2/3:
-    if eachregion == 'OMC23':
-        brightness_threshes['5.0'] = [3e3]
+        #OPH CORE:
+        if eachregion == 'OPHCORE':
+            brightness_threshes['5.0'] = [9e3]
 
-    #OPH CORE:
-    if eachregion == 'OPHCORE':
-        brightness_threshes['5.0'] = [9e3]
+        #SERP MAIN:
+        if eachregion == 'SERPM':
+            brightness_threshes['5.0'] = [1.5e3]
 
-    #SERP MAIN:
-    if eachregion == 'SERPM':
-        brightness_threshes['5.0'] = [1.5e3]
+        #SERP SOUTH:
+        if eachregion == 'SERPS':
+            brightness_threshes['5.0'] = [1.3e3]
 
-    #SERP SOUTH:
-    if eachregion == 'SERPS':
-        brightness_threshes['5.0'] = [1.3e3]
+        #SERP SOUTH:
+        if eachregion == 'DR21C':
+            #brightness_threshes['5.0'] = [1.3e4]
+            brightness_threshes['5.0'] = [1.5e3]
 
-    #SERP SOUTH:
-    if eachregion == 'DR21C':
-        #brightness_threshes['5.0'] = [1.3e4]
-        brightness_threshes['5.0'] = [1.5e3]
-
+    if wave == '850':
+        #IC 348:
+        if eachregion == 'IC348':
+            brightness_threshes['5.0'] = [1.5e3]
+                                                 
+        #NGC 1333:
+        if eachregion == 'NGC1333':
+            brightness_threshes['5.0'] = [2e3]
+                                                 
+        #NGC 2024:
+        if eachregion == 'NGC2024':
+            brightness_threshes['5.0'] = [8e3]
+                                                 
+        #NGC 2068:
+        if eachregion == 'NGC2071':
+            brightness_threshes['5.0'] = [1.5e3]
+                                                 
+        #OMC 2/3:
+        if eachregion == 'OMC23':
+            brightness_threshes['5.0'] = [3e3]
+                                                 
+        #OPH CORE:
+        if eachregion == 'OPHCORE':
+            brightness_threshes['5.0'] = [0.25]
+                                                 
+        #SERP MAIN:
+        if eachregion == 'SERPM':
+            brightness_threshes['5.0'] = [1.5e3]
+                                                 
+        #SERP SOUTH:
+        if eachregion == 'SERPS':
+            brightness_threshes['5.0'] = [1.3e3]
+                                                 
+        #SERP SOUTH:
+        if eachregion == 'DR21C':
+            #brightness_threshes['5.0'] = [1.3e4]
+            brightness_threshes['5.0'] = [1.5e3]
 
     region_noises = {}
     date_scans,noises = readnoise('noises_'+wave+'.txt',eachregion)
@@ -136,8 +171,8 @@ def plot_SDfamsize(eachregion,wave,eachtargunc):
     num_sources_above_flux = len(
         np.array(coadd_cat['PEAK_FLUX'])[np.where(np.array(coadd_cat['PEAK_FLUX']) > brightnessthresh)])
 
-    #Find the lowest brightness source that is above the threshold
-    lowest_flux_above_thresh = min(np.array(coadd_cat['PEAK_FLUX'])[
+    #Find the lowest brightness source that is above the threshold -- multiply by 1000 since coadd_cat is in Jy/beam, but maps are in mJy/beam - 2021-01-11
+    lowest_flux_above_thresh = 1000*min(np.array(coadd_cat['PEAK_FLUX'])[
                                        np.where(np.array(coadd_cat['PEAK_FLUX']) > brightnessthresh)])
 
     RMSthresh = target_perc_unc * lowest_flux_above_thresh * np.sqrt(num_sources_above_flux)
@@ -190,6 +225,8 @@ def plot_SDfamsize(eachregion,wave,eachtargunc):
             peakfluxlist_thistaulimit)
         sourceinfo[eachsource]['dates_thisRMSlimit'] = np.array(datelist_thistaulimit)
 
+
+    print('DATES THAT SURVIVED RMS: ',datelist_thistaulimit)
     pairs_completed = []
 
     # Ensure we dont compare sources to themselves
@@ -215,6 +252,7 @@ def plot_SDfamsize(eachregion,wave,eachtargunc):
         allsources.append(eachsource)
 
     sourceinfo_keys_brightness_order = np.array(allsources)[np.argsort(np.array(allindices))]
+    print('SOURCEINFO KEYS BRIGHTNESS ORDER: ',sourceinfo_keys_brightness_order)
 
     for eachsource in sourceinfo_keys_brightness_order:
         first_ind = str(sourceinfo[eachsource]['index']).zfill(2)
@@ -222,8 +260,8 @@ def plot_SDfamsize(eachregion,wave,eachtargunc):
             second_ind = str(sourceinfo[eachsource2nd]['index']).zfill(2)
             pairname = first_ind + second_ind
             if pairname not in pairs_completed:
-                if sourceinfo[eachsource]['avg_peakflux'] >= brightnessthresh and sourceinfo[eachsource2nd][
-                    'avg_peakflux'] >= brightnessthresh:
+                if sourceinfo[eachsource]['avg_peakflux'] >= brightnessthresh*1000. and sourceinfo[eachsource2nd][
+                    'avg_peakflux'] >= brightnessthresh*1000.: #take into consideration that the brightness threshold is in Jy/beam and sourceinfo is in mJy/beam - 2021-01-11
                     pairnames.append(pairname)
                     first_divided_by_second = sourceinfo[eachsource]['norm_peakfluxes'] / sourceinfo[eachsource2nd][
                         'norm_peakfluxes']
@@ -257,8 +295,13 @@ def plot_SDfamsize(eachregion,wave,eachtargunc):
 
     source_set = set(sources)
 
+    print('\n\nsource set: ',source_set,'\n\n')
+
     sorted_SDs = SDs[np.argsort(SDs)]
     sorted_pairnames = pairnames[np.argsort(SDs)]
+
+    print(sorted_SDs)
+    print('\n\n',sorted_pairnames)
 
     numcals_for_plot = []
     SD_of_best_fam_for_plot = []
@@ -275,6 +318,8 @@ def plot_SDfamsize(eachregion,wave,eachtargunc):
         numcals_for_plot.append(eachpotentialcalnum)
 
         subsets_of_this_size = list(itertools.combinations(source_set, eachpotentialcalnum))
+
+        print(subsets_of_this_size)
 
         highest_SD_in_each_combo = []
         list_of_combos = []
