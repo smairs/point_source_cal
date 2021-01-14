@@ -1,5 +1,3 @@
-#2021-01-11 -- BRIGHTNESS THRESHOLDS SHOULD BE IN Jy/beam WHILE MAPS ARE IN mJy/beam!
-
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
@@ -27,7 +25,46 @@ def plot_SDfamsize(eachregion,wave,eachtargunc):
 
     brightness_threshes = {}
 
-    if wave == '450':
+    if np.logical_and(wave == '850',regions_to_run in ['IC348','NGC1333','NGC2024','NGC2071','OMC23','OPHCORE','SERPM','SERPS']): # -- in Jy/bm to match the coadd catalogues!
+
+        thresh_conversion_factor = 1000.0 # To multiply coadd catalogues by to match sourceinfo 
+
+        #IC 348:
+        if eachregion == 'IC348':
+            brightness_threshes['5.0'] = [0]
+
+        #NGC 1333:
+        if eachregion == 'NGC1333':
+            brightness_threshes['5.0'] = [0]
+
+        #NGC 2024:
+        if eachregion == 'NGC2024':
+            brightness_threshes['5.0'] = [0]
+
+        #NGC 2068:
+        if eachregion == 'NGC2071':
+            brightness_threshes['5.0'] = [0]
+
+        #OMC 2/3:
+        if eachregion == 'OMC23':
+            brightness_threshes['5.0'] = [0]
+
+        #OPH CORE:
+        if eachregion == 'OPHCORE':
+            brightness_threshes['5.0'] = [2.0]
+
+        #SERP MAIN:
+        if eachregion == 'SERPM':
+            brightness_threshes['5.0'] = [0]
+
+        #SERP SOUTH:
+        if eachregion == 'SERPS':
+            brightness_threshes['5.0'] = [0]
+
+    elif wave == '450': # -- in mJy/bm to match the coadd catalogues!
+
+        thresh_conversion_factor = 1.0 # To multiply coadd catalogues by to match sourceinfo -- no conversion needed here.
+
         #IC 348:
         if eachregion == 'IC348':
             brightness_threshes['5.0'] = [1.5e3]
@@ -65,46 +102,31 @@ def plot_SDfamsize(eachregion,wave,eachtargunc):
             #brightness_threshes['5.0'] = [1.3e4]
             brightness_threshes['5.0'] = [1.5e3]
 
-    if wave == '850':
-        #IC 348:
-        if eachregion == 'IC348':
-            brightness_threshes['5.0'] = [1.5e3]
-                                                 
-        #NGC 1333:
-        if eachregion == 'NGC1333':
-            brightness_threshes['5.0'] = [2e3]
-                                                 
-        #NGC 2024:
-        if eachregion == 'NGC2024':
-            brightness_threshes['5.0'] = [8e3]
-                                                 
-        #NGC 2068:
-        if eachregion == 'NGC2071':
-            brightness_threshes['5.0'] = [1.5e3]
-                                                 
-        #OMC 2/3:
-        if eachregion == 'OMC23':
-            brightness_threshes['5.0'] = [3e3]
-                                                 
-        #OPH CORE:
-        if eachregion == 'OPHCORE':
-            brightness_threshes['5.0'] = [0.25]
-                                                 
-        #SERP MAIN:
-        if eachregion == 'SERPM':
-            brightness_threshes['5.0'] = [1.5e3]
-                                                 
-        #SERP SOUTH:
-        if eachregion == 'SERPS':
-            brightness_threshes['5.0'] = [1.3e3]
-                                                 
-        #SERP SOUTH:
+    elif np.logical_and(wave == '850',regions_to_run in ['DR21C','DR21N','DR21S','M17','M17SWex','S255']): #-- mJy/beam!
+
+        thresh_conversion_factor = 1.0 # To multiply coadd catalogues by to match sourceinfo -- no conversion needed here.
+                                     
         if eachregion == 'DR21C':
-            #brightness_threshes['5.0'] = [1.3e4]
             brightness_threshes['5.0'] = [1.5e3]
 
+        if eachregion == 'DR21N':
+            brightness_threshes['5.0'] = [0]
+
+        if eachregion == 'DR21S':
+            brightness_threshes['5.0'] = [0]
+
+        if eachregion == 'M17':
+            brightness_threshes['5.0'] = [0]
+
+        if eachregion == 'M17SWex':
+            brightness_threshes['5.0'] = [0]
+
+        if eachregion == 'S255':
+            brightness_threshes['5.0'] = [0]
+
+
     region_noises = {}
-    date_scans,noises = readnoise('noises_'+wave+'.txt',eachregion)
+    date_scans,noises = readnoise('noises_'+wave+'.txt',eachregion) # This is always in mJy/beam for both 450 and 850
     region_noises[eachregion] = {}
     region_noises[eachregion]['noises'] = np.array(noises)
     region_noises[eachregion]['date_scans'] = np.array(date_scans)
@@ -169,13 +191,13 @@ def plot_SDfamsize(eachregion,wave,eachtargunc):
 
 
     num_sources_above_flux = len(
-        np.array(coadd_cat['PEAK_FLUX'])[np.where(np.array(coadd_cat['PEAK_FLUX']) > brightnessthresh)])
+        np.array(coadd_cat['PEAK_FLUX'])[np.where(np.array(coadd_cat['PEAK_FLUX']) > brightnessthresh)]) # This is already in mJy/bm for 450 and Jy/bm for 850
 
-    #Find the lowest brightness source that is above the threshold -- multiply by 1000 since coadd_cat is in Jy/beam, but maps are in mJy/beam - 2021-01-11
-    lowest_flux_above_thresh = 1000*min(np.array(coadd_cat['PEAK_FLUX'])[
+    #Find the lowest brightness source that is above the threshold -- multiply by 1000 if one of 8 original regions and 850 microns since coadd_cat is in Jy/beam, but maps are in mJy/beam - 2021-01-11
+    lowest_flux_above_thresh = thresh_conversion_factor*min(np.array(coadd_cat['PEAK_FLUX'])[
                                        np.where(np.array(coadd_cat['PEAK_FLUX']) > brightnessthresh)])
 
-    RMSthresh = target_perc_unc * lowest_flux_above_thresh * np.sqrt(num_sources_above_flux)
+    RMSthresh = target_perc_unc * lowest_flux_above_thresh * np.sqrt(num_sources_above_flux) # For both wavelengths this will be in mJy/beam now
     perc_maps = 100 * len(region_noises[
                               eachregion]['noises'][
                               np.where(region_noises[eachregion]['noises'] <= RMSthresh)]) / float(
@@ -260,8 +282,8 @@ def plot_SDfamsize(eachregion,wave,eachtargunc):
             second_ind = str(sourceinfo[eachsource2nd]['index']).zfill(2)
             pairname = first_ind + second_ind
             if pairname not in pairs_completed:
-                if sourceinfo[eachsource]['avg_peakflux'] >= brightnessthresh*1000. and sourceinfo[eachsource2nd][
-                    'avg_peakflux'] >= brightnessthresh*1000.: #take into consideration that the brightness threshold is in Jy/beam and sourceinfo is in mJy/beam - 2021-01-11
+                if sourceinfo[eachsource]['avg_peakflux'] >= brightnessthresh*thresh_conversion_factor and sourceinfo[eachsource2nd][
+                    'avg_peakflux'] >= brightnessthresh*thresh_conversion_factor: #take into consideration that the brightness threshold is in Jy/beam and sourceinfo is in mJy/beam in the case of 850 microns+original 8 maps -- otherwise the conversion does nothing- 2021-01-11
                     pairnames.append(pairname)
                     first_divided_by_second = sourceinfo[eachsource]['norm_peakfluxes'] / sourceinfo[eachsource2nd][
                         'norm_peakfluxes']
@@ -318,8 +340,6 @@ def plot_SDfamsize(eachregion,wave,eachtargunc):
         numcals_for_plot.append(eachpotentialcalnum)
 
         subsets_of_this_size = list(itertools.combinations(source_set, eachpotentialcalnum))
-
-        print(subsets_of_this_size)
 
         highest_SD_in_each_combo = []
         list_of_combos = []

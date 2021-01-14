@@ -61,8 +61,51 @@ def make_FCFunc_family_plots(regions_to_run,wave):
         brightness_threshes['SERPS'] = {}
         brightness_threshes['DR21C'] = {}
 
+        if np.logical_and(wave == '850',regions_to_run in ['IC348','NGC1333','NGC2024','NGC2071','OMC23','OPHCORE','SERPM','SERPS']):  #-- Jy/beam! This is to match the coadd catalogue
+            thresh_conversion_factor = 1000.0 # To multiply catalogue numbers by so it matches the sourceinfo file
+            brightness_threshes['IC348']['10.0'] = 0
+            brightness_threshes['NGC1333']['10.0'] = 0
+            brightness_threshes['NGC2024']['10.0'] = 0
+            brightness_threshes['NGC2071']['10.0'] = 0
+            brightness_threshes['OMC23']['10.0'] = 0
+            brightness_threshes['OPHCORE']['10.0'] = 2.0
+            brightness_threshes['SERPM']['10.0'] = 0
+            brightness_threshes['SERPS']['10.0'] = 0
+    
+            brightness_threshes['IC348']['5.0'] = 0
+            brightness_threshes['NGC1333']['5.0'] = 0
+            brightness_threshes['NGC2024']['5.0'] = 0
+            brightness_threshes['NGC2071']['5.0'] = 0
+            brightness_threshes['OMC23']['5.0'] = 0
+            brightness_threshes['OPHCORE']['5.0'] = 2.0 
+            brightness_threshes['SERPM']['5.0'] = 0
+            brightness_threshes['SERPS']['5.0'] = 0
+    
+    
+            brightness_threshes['IC348']['2.5'] = 0
+            brightness_threshes['NGC1333']['2.5'] = 0
+            brightness_threshes['NGC2024']['2.5'] = 0
+            brightness_threshes['NGC2071']['2.5'] = 0
+            brightness_threshes['OMC23']['2.5'] = 0
+            brightness_threshes['OPHCORE']['2.5'] = 2.0
+            brightness_threshes['SERPM']['2.5'] = 0
+            brightness_threshes['SERPS']['2.5'] = 0
+    
+    
+            brightness_threshes['IC348']['1.0'] = 0
+            brightness_threshes['NGC1333']['1.0'] = 0
+            brightness_threshes['NGC2024']['1.0'] = 0
+            brightness_threshes['NGC2071']['1.0'] = 0
+            brightness_threshes['OMC23']['1.0'] = 0
+            brightness_threshes['OPHCORE']['1.0'] = 2.0
+            brightness_threshes['SERPM']['1.0'] = 0
+            brightness_threshes['SERPS']['1.0'] = 0
 
-        if wave == '450':
+
+        elif wave == '450': #-- mJy/beam! This is to match the coadd catalogues! 
+
+            thresh_conversion_factor = 1.0 # To multiply catalogue numbers by so it matches the sourceinfo file -- no correction needed in this case
+       
             brightness_threshes['IC348']['10.0'] = 1.5e3
             brightness_threshes['NGC1333']['10.0'] = 2e3
             brightness_threshes['NGC2024']['10.0'] = 8e3
@@ -109,55 +152,47 @@ def make_FCFunc_family_plots(regions_to_run,wave):
             brightness_threshes['SERPS']['1.0'] = 3e3
             #brightness_threshes['DR21C']['1.0'] = 1.3e4
             brightness_threshes['DR21C']['1.0'] = 1.5e3      
-    
-        if wave == '850':
-            brightness_threshes['IC348']['10.0'] = 1.5e3
-            brightness_threshes['NGC1333']['10.0'] = 2e3
-            brightness_threshes['NGC2024']['10.0'] = 8e3
-            brightness_threshes['NGC2071']['10.0'] = 1.5e3
-            brightness_threshes['OMC23']['10.0'] = 3e3
-            brightness_threshes['OPHCORE']['10.0'] = 0.25
-            brightness_threshes['SERPM']['10.0'] = 1.5e3
-            brightness_threshes['SERPS']['10.0'] = 1.3e3
+
+        elif np.logical_and(wave == '850',regions_to_run in ['DR21C','DR21N','DR21S','M17','M17SWex','S255']): #-- mJy/beam!
+
+            thresh_conversion_factor = 1.0 # To multiply coadd catalogues by to match sourceinfo -- no conversion needed here.
+       
+            brightness_threshes['S255']['10.0'] = 0
+            brightness_threshes['M17SWex']['10.0'] = 0
+            brightness_threshes['M17']['10.0'] = 0
+            brightness_threshes['DR21S']['10.0'] = 0
+            brightness_threshes['DR21N']['10.0'] = 0
             #brightness_threshes['DR21C']['10.0'] = 1.3e4
             brightness_threshes['DR21C']['10.0'] = 1.5e3
     
     
-            brightness_threshes['IC348']['5.0'] = 1.5e3
-            brightness_threshes['NGC1333']['5.0'] = 2e3
-            brightness_threshes['NGC2024']['5.0'] = 8e3
-            brightness_threshes['NGC2071']['5.0'] = 1.5e3
-            brightness_threshes['OMC23']['5.0'] = 3e3
-            brightness_threshes['OPHCORE']['5.0'] = 0.25
-            brightness_threshes['SERPM']['5.0'] = 1.5e3
-            brightness_threshes['SERPS']['5.0'] = 1.3e3
+            brightness_threshes['S255']['5.0'] = 0
+            brightness_threshes['M17SWex']['5.0'] = 0
+            brightness_threshes['M17']['5.0'] = 0
+            brightness_threshes['DR21S']['5.0'] = 0
+            brightness_threshes['DR21N']['5.0'] = 0
             #brightness_threshes['DR21C']['5.0'] = 1.3e4
             brightness_threshes['DR21C']['5.0'] = 1.5e3
     
     
-            brightness_threshes['IC348']['2.5'] = 1.5e3
-            brightness_threshes['NGC1333']['2.5'] = 8e3
-            brightness_threshes['NGC2024']['2.5'] = 8e3
-            brightness_threshes['NGC2071']['2.5'] = 1.5e3
-            brightness_threshes['OMC23']['2.5'] = 7e3
-            brightness_threshes['OPHCORE']['2.5'] = 0.25
-            brightness_threshes['SERPM']['2.5'] = 4e3
-            brightness_threshes['SERPS']['2.5'] = 2e3
+            brightness_threshes['S255']['2.5'] = 0
+            brightness_threshes['M17SWex']['2.5'] = 0
+            brightness_threshes['M17']['2.5'] = 0
+            brightness_threshes['DR21S']['2.5'] = 0
+            brightness_threshes['DR21N']['2.5'] = 0
             #brightness_threshes['DR21C']['2.5'] = 1.3e4
             brightness_threshes['DR21C']['2.5'] = 1.5e3
     
     
-            brightness_threshes['IC348']['1.0'] = 1.5e3
-            brightness_threshes['NGC1333']['1.0'] = 8e3
-            brightness_threshes['NGC2024']['1.0'] = 1e4
-            brightness_threshes['NGC2071']['1.0'] = 2e3
-            brightness_threshes['OMC23']['1.0'] = 7e3
-            brightness_threshes['OPHCORE']['1.0'] = 0.25
-            brightness_threshes['SERPM']['1.0'] = 4e3
-            brightness_threshes['SERPS']['1.0'] = 3e3
+            brightness_threshes['S255']['1.0'] = 0
+            brightness_threshes['M17SWex']['1.0'] = 0
+            brightness_threshes['M17']['1.0'] = 0
+            brightness_threshes['DR21S']['1.0'] = 0
+            brightness_threshes['DR21N']['1.0'] = 0
             #brightness_threshes['DR21C']['1.0'] = 1.3e4
-            brightness_threshes['DR21C']['1.0'] = 1.5e3     
+            brightness_threshes['DR21C']['1.0'] = 1.5e3      
 
+    
         #fig,axs = plt.subplots(ncols=2,nrows=4,constrained_layout=False)
         fig,axs = plt.subplots(ncols=2,nrows=1,constrained_layout=False)
     
@@ -208,7 +243,7 @@ def make_FCFunc_family_plots(regions_to_run,wave):
                     dummy = 0
                     for eachflux in peak_fluxes_sorted:
                         dummy = dummy+1
-                        brightnesses_to_plot.append(eachflux)
+                        brightnesses_to_plot.append(eachflux*thresh_conversion_factor) # Convert from Jy/beam to mJy/beam if necessary - will do nothing if unnecessary
                         num_sources_to_plot.append(dummy)
     
                      # Colouring the plots by source detection capability
@@ -236,7 +271,7 @@ def make_FCFunc_family_plots(regions_to_run,wave):
                         if region in ['OMC23','SERPS']:
                             print(eachnum,eachflux,eachtargunc*eachflux*np.sqrt(eachnum))
                         # Ensemble Signal x Noise/Ensemble Signal
-                        noise_required_for_this_sig_unc = eachtargunc*eachflux*np.sqrt(eachnum)
+                        noise_required_for_this_sig_unc = eachtargunc*eachflux*np.sqrt(eachnum) # Noise should be in mJy/beam - it matches the "noises" file -- already converted, above
                         perc_maps = 100*len(noises[np.where(noises<=noise_required_for_this_sig_unc)])/float(len(noises))
                         for eachplotcolorbound in range(len(plotcolorbounds)-1):
                             if np.logical_and(perc_maps>=plotcolorbounds[eachplotcolorbound],
@@ -397,7 +432,7 @@ def make_FCFunc_family_plots(regions_to_run,wave):
                     cal_info_dict['RelFCFs'] = FCFs_all[-1]
                     cal_info_dict['RelFCFuncs'] = np.array(FCF_uncs_all[-1]) / 100
     
-                    pickle.dump(cal_info_dict, open(region + '_PointSource_cal_info_dict_targunc'+
+                    pickle.dump(cal_info_dict, open('pointsource_results/'+region+'/'+region+'_PointSource_cal_info_dict_targunc'+
                                                     str(int(float(target_uncertainty_key)))+'.pickle', 'wb'))
             #fig.tight_layout(pad=0.45)
             #fig.savefig(regionstring + 'SignalUnc_versus_FaintSNR_targunc' + str(int(float(target_uncertainty_key))) +
