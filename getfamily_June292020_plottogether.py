@@ -25,7 +25,7 @@ def plot_SDfamsize(eachregion,wave,eachtargunc):
 
     brightness_threshes = {}
 
-    if np.logical_and(wave == '850',regions_to_run in ['IC348','NGC1333','NGC2024','NGC2071','OMC23','OPHCORE','SERPM','SERPS']): # -- in Jy/bm to match the coadd catalogues!
+    if np.logical_and(wave == '850',eachregion in ['IC348','NGC1333','NGC2024','NGC2071','OMC23','OPHCORE','SERPM','SERPS']): # -- in Jy/bm to match the coadd catalogues!
 
         thresh_conversion_factor = 1000.0 # To multiply coadd catalogues by to match sourceinfo 
 
@@ -97,17 +97,16 @@ def plot_SDfamsize(eachregion,wave,eachtargunc):
         if eachregion == 'SERPS':
             brightness_threshes['5.0'] = [1.3e3]
 
-        #SERP SOUTH:
+        #DR21C:
         if eachregion == 'DR21C':
-            #brightness_threshes['5.0'] = [1.3e4]
-            brightness_threshes['5.0'] = [1.5e3]
+            brightness_threshes['5.0'] = [1.3e4]
 
-    elif np.logical_and(wave == '850',regions_to_run in ['DR21C','DR21N','DR21S','M17','M17SWex','S255']): #-- mJy/beam!
+    elif np.logical_and(wave == '850',eachregion in ['DR21C','DR21N','DR21S','M17','M17SWex','S255']): #-- mJy/beam!
 
         thresh_conversion_factor = 1.0 # To multiply coadd catalogues by to match sourceinfo -- no conversion needed here.
                                      
         if eachregion == 'DR21C':
-            brightness_threshes['5.0'] = [1.5e3]
+            brightness_threshes['5.0'] = [2e3]
 
         if eachregion == 'DR21N':
             brightness_threshes['5.0'] = [0]
@@ -225,7 +224,13 @@ def plot_SDfamsize(eachregion,wave,eachtargunc):
     totalnightnum = len(np.array(sourceinfo[list(sourceinfo.keys())[0]]['dates']))
 
     for eachsource in sourceinfo.keys():
-        alldates1 = np.array(sourceinfo[eachsource]['dates'])[np.argsort(np.array(sourceinfo[eachsource]['dates']))]
+        alldates2 = np.array(sourceinfo[eachsource]['dates_reg'])[np.argsort(np.array(sourceinfo[eachsource]['dates']))]
+        allscans2 = np.array(sourceinfo[eachsource]['scan'])[np.argsort(np.array(sourceinfo[eachsource]['dates']))]
+        alldates1 = []
+        for datedummy,scandummy in zip(alldates2,allscans2):
+            alldates1.append(datedummy+'_'+scandummy)
+        alldates1 = np.array(alldates1)
+        print('\n\n\nBLABAHOOEE',alldates1,'\n\n\n')
         ordered_peakfluxes1 = np.array(sourceinfo[eachsource]['peakfluxes'])[
             np.argsort(np.array(sourceinfo[eachsource]['dates']))]
         datelist_thistaulimit = []

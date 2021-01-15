@@ -25,7 +25,8 @@ rc('axes',labelsize='x-small')
 ##################################################
 
 #regions_to_run_list = [['IC348'],['NGC1333'],['NGC2024'],['NGC2071'],['OMC23'],['OPHCORE'],['SERPM'],['SERPS']]
-def make_FCFunc_family_plots(regions_to_run,wave):
+#target_uncertainties = [0.05] # = 5%
+def make_FCFunc_family_plots(regions_to_run,wave,target_uncertainties):
 
     regions_to_run_list = list(regions_to_run)
     
@@ -34,7 +35,6 @@ def make_FCFunc_family_plots(regions_to_run,wave):
         regionstring = ''
     
         region_scaling = 100 #mJy/beam
-        target_uncertainties = [0.05] # 5%
     
         cat_dir  = 'config/'
         detection_significance_in_single_epoch = 5# sigma
@@ -60,6 +60,12 @@ def make_FCFunc_family_plots(regions_to_run,wave):
         brightness_threshes['SERPM'] = {}
         brightness_threshes['SERPS'] = {}
         brightness_threshes['DR21C'] = {}
+        brightness_threshes['DR21N'] = {}
+        brightness_threshes['DR21S'] = {}
+        brightness_threshes['M17'] = {}
+        brightness_threshes['M17SWex'] = {}
+        brightness_threshes['S255'] = {}
+
 
         if np.logical_and(wave == '850',regions_to_run in ['IC348','NGC1333','NGC2024','NGC2071','OMC23','OPHCORE','SERPM','SERPS']):  #-- Jy/beam! This is to match the coadd catalogue
             thresh_conversion_factor = 1000.0 # To multiply catalogue numbers by so it matches the sourceinfo file
@@ -114,8 +120,7 @@ def make_FCFunc_family_plots(regions_to_run,wave):
             brightness_threshes['OPHCORE']['10.0'] = 9e3
             brightness_threshes['SERPM']['10.0'] = 1.5e3
             brightness_threshes['SERPS']['10.0'] = 1.3e3
-            #brightness_threshes['DR21C']['10.0'] = 1.3e4
-            brightness_threshes['DR21C']['10.0'] = 1.5e3
+            brightness_threshes['DR21C']['10.0'] = 1.3e4
     
     
             brightness_threshes['IC348']['5.0'] = 1.5e3
@@ -126,8 +131,7 @@ def make_FCFunc_family_plots(regions_to_run,wave):
             brightness_threshes['OPHCORE']['5.0'] = 9e3
             brightness_threshes['SERPM']['5.0'] = 1.5e3
             brightness_threshes['SERPS']['5.0'] = 1.3e3
-            #brightness_threshes['DR21C']['5.0'] = 1.3e4
-            brightness_threshes['DR21C']['5.0'] = 1.5e3
+            brightness_threshes['DR21C']['5.0'] = 1.3e4
     
     
             brightness_threshes['IC348']['2.5'] = 1.5e3
@@ -138,9 +142,7 @@ def make_FCFunc_family_plots(regions_to_run,wave):
             brightness_threshes['OPHCORE']['2.5'] = 9e3
             brightness_threshes['SERPM']['2.5'] = 4e3
             brightness_threshes['SERPS']['2.5'] = 2e3
-            #brightness_threshes['DR21C']['2.5'] = 1.3e4
-            brightness_threshes['DR21C']['2.5'] = 1.5e3
-    
+            brightness_threshes['DR21C']['2.5'] = 1.3e4
     
             brightness_threshes['IC348']['1.0'] = 1.5e3
             brightness_threshes['NGC1333']['1.0'] = 8e3
@@ -150,8 +152,7 @@ def make_FCFunc_family_plots(regions_to_run,wave):
             brightness_threshes['OPHCORE']['1.0'] = 9e3
             brightness_threshes['SERPM']['1.0'] = 4e3
             brightness_threshes['SERPS']['1.0'] = 3e3
-            #brightness_threshes['DR21C']['1.0'] = 1.3e4
-            brightness_threshes['DR21C']['1.0'] = 1.5e3      
+            brightness_threshes['DR21C']['1.0'] = 1.3e4
 
         elif np.logical_and(wave == '850',regions_to_run in ['DR21C','DR21N','DR21S','M17','M17SWex','S255']): #-- mJy/beam!
 
@@ -162,8 +163,7 @@ def make_FCFunc_family_plots(regions_to_run,wave):
             brightness_threshes['M17']['10.0'] = 0
             brightness_threshes['DR21S']['10.0'] = 0
             brightness_threshes['DR21N']['10.0'] = 0
-            #brightness_threshes['DR21C']['10.0'] = 1.3e4
-            brightness_threshes['DR21C']['10.0'] = 1.5e3
+            brightness_threshes['DR21C']['10.0'] = 2e3
     
     
             brightness_threshes['S255']['5.0'] = 0
@@ -171,8 +171,7 @@ def make_FCFunc_family_plots(regions_to_run,wave):
             brightness_threshes['M17']['5.0'] = 0
             brightness_threshes['DR21S']['5.0'] = 0
             brightness_threshes['DR21N']['5.0'] = 0
-            #brightness_threshes['DR21C']['5.0'] = 1.3e4
-            brightness_threshes['DR21C']['5.0'] = 1.5e3
+            brightness_threshes['DR21C']['5.0'] = 2e3
     
     
             brightness_threshes['S255']['2.5'] = 0
@@ -180,8 +179,7 @@ def make_FCFunc_family_plots(regions_to_run,wave):
             brightness_threshes['M17']['2.5'] = 0
             brightness_threshes['DR21S']['2.5'] = 0
             brightness_threshes['DR21N']['2.5'] = 0
-            #brightness_threshes['DR21C']['2.5'] = 1.3e4
-            brightness_threshes['DR21C']['2.5'] = 1.5e3
+            brightness_threshes['DR21C']['2.5'] = 2e3
     
     
             brightness_threshes['S255']['1.0'] = 0
@@ -189,8 +187,7 @@ def make_FCFunc_family_plots(regions_to_run,wave):
             brightness_threshes['M17']['1.0'] = 0
             brightness_threshes['DR21S']['1.0'] = 0
             brightness_threshes['DR21N']['1.0'] = 0
-            #brightness_threshes['DR21C']['1.0'] = 1.3e4
-            brightness_threshes['DR21C']['1.0'] = 1.5e3      
+            brightness_threshes['DR21C']['1.0'] = 2e3      
 
     
         #fig,axs = plt.subplots(ncols=2,nrows=4,constrained_layout=False)
@@ -440,22 +437,30 @@ def make_FCFunc_family_plots(regions_to_run,wave):
             #plt.clf()
             #plt.close()
             #plt.close(fig)
-    
+   
         # Now, plot calfactors for each family number!
         for eachcalnum in range(len(FCFs_all)):
-            plt.errorbar(FCF_dates_all[eachcalnum],FCFs_all[eachcalnum],yerr=np.array(FCF_uncs_all[eachcalnum])/100,color='blue')
+
+            FCF_dates_all_MJD = []
+            for datescan in FCF_dates_all[eachcalnum]:
+                datestr = datescan.split('_')[0]
+                dateisot = datestr[0:4]+'-'+datestr[4:6]+'-'+datestr[6:8]+'T00:00:00.00'
+                FCF_dates_all_MJD.append(Time(dateisot,format='isot').mjd)
+            FCF_dates_all_MJD = np.array(FCF_dates_all_MJD)
+
+            plt.errorbar(FCF_dates_all_MJD,FCFs_all[eachcalnum],yerr=np.array(FCF_uncs_all[eachcalnum])/100,color='blue')
             plt.suptitle(region+', Num Fam Members: '+str(numcals_for_plot[eachcalnum]))
             date_labels = []
             for i,normflux in enumerate(normfluxes_by_date_all[eachcalnum]):
                 for j in normflux:
-                    plt.scatter(FCF_dates_all[eachcalnum][i],j,color='k')
-                date_labels.append(str(Time(FCF_dates_all[eachcalnum][i],format='jd').isot).split('T')[0])
+                    plt.scatter(FCF_dates_all_MJD[i],j,color='k')
+                date_labels.append(str(Time(FCF_dates_all_MJD[i],format='jd').isot).split('T')[0])
             plt.ylabel('Rel FCF')
             plt.ylim(ymin=0.2,ymax=1.8)
     
             spaced_xticks = []
             spaced_xtick_labels = []
-            for i,date,datelabel in zip(np.arange(0,len(FCF_dates_all[eachcalnum]),1),FCF_dates_all[eachcalnum],date_labels):
+            for i,date,datelabel in zip(np.arange(0,len(FCF_dates_all_MJD),1),FCF_dates_all_MJD,date_labels):
                 if i % 4 == 0:
                     spaced_xticks.append(date)
                     spaced_xtick_labels.append(datelabel)
