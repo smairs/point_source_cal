@@ -23,6 +23,13 @@ def plot_SDfamsize(eachregion,wave,eachtargunc):
     rc('axes', labelsize='x-large')
     ######
 
+    if wave == '450':
+        #date_cutoff = '20190815'
+        date_cutoff = 20210101
+    elif wave == '850':
+        #date_cutoff = '20170301' 
+        date_cutoff = 20210101
+
     brightness_threshes = {}
 
     if np.logical_and(wave == '850',eachregion in ['IC348','NGC1333','NGC2024','NGC2071','OMC23','OPHCORE','SERPM','SERPS']): # -- in Jy/bm to match the coadd catalogues!
@@ -228,13 +235,15 @@ def plot_SDfamsize(eachregion,wave,eachtargunc):
         allscans2 = np.array(sourceinfo[eachsource]['scan'])[np.argsort(np.array(sourceinfo[eachsource]['dates']))]
         alldates1 = []
         for datedummy,scandummy in zip(alldates2,allscans2):
+            print(datedummy,scandummy)
+            print(datedummy+'_'+scandummy)
             alldates1.append(datedummy+'_'+scandummy)
         alldates1 = np.array(alldates1)
-        print('\n\n\nBLABAHOOEE',alldates1,'\n\n\n')
         ordered_peakfluxes1 = np.array(sourceinfo[eachsource]['peakfluxes'])[
             np.argsort(np.array(sourceinfo[eachsource]['dates']))]
         datelist_thistaulimit = []
         peakfluxlist_thistaulimit = []
+        peakfluxes_to_normalise_date_cutoff = []
         for i in range(len(ordered_peakfluxes1)):
             rms_thisdate = rms_on_date[np.where(metadata_datestring == np.array(sourceinfo[eachsource]['dates_reg'])[
                 np.argsort(np.array(sourceinfo[eachsource]['dates']))][i] + '_' +
@@ -247,9 +256,12 @@ def plot_SDfamsize(eachregion,wave,eachtargunc):
                 #                              np.argsort(np.array(sourceinfo[eachsource]['dates']))][i])][0]
                 datelist_thistaulimit.append(alldates1[i])
                 peakfluxlist_thistaulimit.append(ordered_peakfluxes1[i])
+                print(int(alldates1[i].split('_')[0]))
+                if int(alldates1[i].split('_')[0])<date_cutoff:
+                    peakfluxes_to_normalise_date_cutoff.append(ordered_peakfluxes1[i])
         sourceinfo[eachsource]['avg_peakflux'] = np.mean(peakfluxlist_thistaulimit)
         sourceinfo[eachsource]['norm_peakfluxes'] = np.array(peakfluxlist_thistaulimit) / np.mean(
-            peakfluxlist_thistaulimit)
+            peakfluxes_to_normalise_date_cutoff)
         sourceinfo[eachsource]['dates_thisRMSlimit'] = np.array(datelist_thistaulimit)
 
 
@@ -279,7 +291,6 @@ def plot_SDfamsize(eachregion,wave,eachtargunc):
         allsources.append(eachsource)
 
     sourceinfo_keys_brightness_order = np.array(allsources)[np.argsort(np.array(allindices))]
-    print('SOURCEINFO KEYS BRIGHTNESS ORDER: ',sourceinfo_keys_brightness_order)
 
     for eachsource in sourceinfo_keys_brightness_order:
         first_ind = str(sourceinfo[eachsource]['index']).zfill(2)
@@ -322,13 +333,10 @@ def plot_SDfamsize(eachregion,wave,eachtargunc):
 
     source_set = set(sources)
 
-    print('\n\nsource set: ',source_set,'\n\n')
 
     sorted_SDs = SDs[np.argsort(SDs)]
     sorted_pairnames = pairnames[np.argsort(SDs)]
 
-    print(sorted_SDs)
-    print('\n\n',sorted_pairnames)
 
     numcals_for_plot = []
     SD_of_best_fam_for_plot = []

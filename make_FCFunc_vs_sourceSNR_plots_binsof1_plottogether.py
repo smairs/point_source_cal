@@ -11,7 +11,7 @@ from point_source_cal.getfamily_June292020_plottogether import plot_SDfamsize
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 from astropy.time import Time
 import pickle
-
+import os
 
 ##################################################
 # Set up plot style for consistency for paper!
@@ -39,7 +39,6 @@ def make_FCFunc_family_plots(regions_to_run,wave,target_uncertainties):
         cat_dir  = 'config/'
         detection_significance_in_single_epoch = 5# sigma
         cat_list = sorted(list(glob.glob(cat_dir+'/'+regions_to_run[0]+'*'+wave+'*fits')))
-        print(cat_list)
     
         plotcolorbounds = [0,30,40,50,60,70,80,90,100]
         plotcolors      = sns.color_palette('colorblind',len(plotcolorbounds)-3)
@@ -412,17 +411,13 @@ def make_FCFunc_family_plots(regions_to_run,wave,target_uncertainties):
                     ax3.set_xlim(xmin=0.02, xmax=0.35)
     
                     fig.tight_layout(pad=0.45)
-                    fig.savefig('pointsource_results/'+region+'SignalUnc_versus_FaintSNR_targunc'+str(int(float(target_uncertainty_key)))+
+                    fig.savefig('pointsource_results/'+region+'SignalUnc_versus_FaintSNR_'+wave+'_targunc'+str(int(float(target_uncertainty_key)))+
                                 '.pdf',format='pdf')
                     plt.clf()
                     plt.close()
                     plt.close(fig)
     
                     # The negative 1 index gives the highest cal number that meets the target uncertainty criterion
-                    print('\n\nHEREHEREHERE\n\n',families_all,'\n\n')
-                    print('\n\n',FCF_dates_all,'\n\n')
-                    print('\n\n',FCFs_all,'\n\n')
-                    print('\n\n',FCF_uncs_all,'\n\n')
                     cal_info_dict = {}
                     cal_info_dict['family'] = families_all[-1][-1]
                     cal_info_dict['datescans'] = FCF_dates_all[-1]
@@ -430,7 +425,7 @@ def make_FCFunc_family_plots(regions_to_run,wave,target_uncertainties):
                     cal_info_dict['RelFCFuncs'] = np.array(FCF_uncs_all[-1]) / 100
     
                     pickle.dump(cal_info_dict, open('pointsource_results/'+region+'/'+region+'_PointSource_cal_info_dict_targunc'+
-                                                    str(int(float(target_uncertainty_key)))+'.pickle', 'wb'))
+                                                    str(int(float(target_uncertainty_key)))+'_'+wave+'.pickle', 'wb'))
             #fig.tight_layout(pad=0.45)
             #fig.savefig(regionstring + 'SignalUnc_versus_FaintSNR_targunc' + str(int(float(target_uncertainty_key))) +
             #            '.pdf', format='pdf')
@@ -440,7 +435,7 @@ def make_FCFunc_family_plots(regions_to_run,wave,target_uncertainties):
    
         # Now, plot calfactors for each family number!
         for eachcalnum in range(len(FCFs_all)):
-
+            os.system('mkdir pointsource_results/FCFplots/')
             FCF_dates_all_MJD = []
             for datescan in FCF_dates_all[eachcalnum]:
                 datestr = datescan.split('_')[0]
@@ -465,13 +460,13 @@ def make_FCFunc_family_plots(regions_to_run,wave,target_uncertainties):
                     spaced_xticks.append(date)
                     spaced_xtick_labels.append(datelabel)
             plt.xticks(spaced_xticks,spaced_xtick_labels,rotation=20)
-            plt.savefig('pointsource_results/FCFplots/'+region+'_'+str(numcals_for_plot[eachcalnum])+'FamMems_FCF_with_time.png',format='png',dpi=300)
+            plt.savefig('pointsource_results/FCFplots/'+region+'_'+str(numcals_for_plot[eachcalnum])+'FamMems_FCF_with_time_'+wave+'.png',format='png',dpi=300)
             plt.clf()
     
         for eachcalnum in range(len(FCFs_all)):
             plt.hist(FCFs_all[eachcalnum],color='k')
             plt.suptitle(region+', Num Fam Members: '+str(numcals_for_plot[eachcalnum]))
-            plt.savefig('pointsource_results/FCFplots/'+region+'_'+str(numcals_for_plot[eachcalnum])+'FamMems_FCFhists.png',format='png',dpi=300)
+            plt.savefig('pointsource_results/FCFplots/'+region+'_'+str(numcals_for_plot[eachcalnum])+'FamMems_FCFhists_'+wave+'.png',format='png',dpi=300)
             plt.clf()
     
         for eachcalnum in range(len(FCFs_all)):
@@ -481,5 +476,5 @@ def make_FCFunc_family_plots(regions_to_run,wave,target_uncertainties):
             plt.xlim(xmin=0,xmax=10)
             plt.ylim(ymin=0, ymax=12)
             plt.suptitle(region+', Num Fam Members: '+str(numcals_for_plot[eachcalnum]))
-            plt.savefig('pointsource_results/FCFplots/'+region+'_'+str(numcals_for_plot[eachcalnum])+'FamMems_FCFunchists.png',format='png',dpi=300)
+            plt.savefig('pointsource_results/FCFplots/'+region+'_'+str(numcals_for_plot[eachcalnum])+'FamMems_FCFunchists_'+wave+'.png',format='png',dpi=300)
             plt.clf()
